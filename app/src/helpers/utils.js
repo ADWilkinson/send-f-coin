@@ -179,7 +179,6 @@ export function getMinDay(mintDay) {
 }
 
 export async function getDeploymentTimestamp(address) {
-  // @ts-ignore
   const potionContract = new ethers.Contract(address, potionAbi, provider);
   const deploymentTimestamp = await potionContract.getDeploymentTimestamp();
   return deploymentTimestamp.toString();

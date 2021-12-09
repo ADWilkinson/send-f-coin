@@ -119,7 +119,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { shorten } from '@/helpers/utils.ts';
+import { shorten } from '@/helpers/utils.js';
 import { ethers } from 'ethers';
 
 

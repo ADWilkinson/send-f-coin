@@ -12,7 +12,7 @@ import LPStaking from './views/LPStaking.vue';
 
 Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
+const routes = [
   { path: '/', name: 'home', component: Home },
   { path: '/dashboard', name: 'dashboard', component: Dashboard },
   { path: '/stake', name: 'stake', component: Stake },

@@ -40,7 +40,7 @@ const EPOCH_INTERVAL = 2200;
 // NOTE could get this from an outside source since it changes slightly over time
 const BLOCK_RATE_SECONDS = 13.14;
 
-async function getNextEpoch(): Promise<[number, number, number]> {
+async function getNextEpoch() {
   const height = await provider.getBlockNumber();
 
   if (height % EPOCH_INTERVAL === 0) {
@@ -197,7 +197,7 @@ const actions = {
         allowance = await daiContract.allowance(
           address,
           addresses[network.chainId].PRESALE_ADDRESS
-        )!;
+        );
 
         if (addresses[network.chainId].LP_ADDRESS) {
           lpContract = new ethers.Contract(
@@ -257,7 +257,7 @@ const actions = {
           stakeAllowance = await ohmContract.allowance(
             address,
             addresses[network.chainId].STAKING_ADDRESS
-          )!;
+          );
         }
         if (addresses[network.chainId].SOHM_ADDRESS) {
           sohmContract = new ethers.Contract(
@@ -275,7 +275,7 @@ const actions = {
           unstakeAllowance = await sohmContract.allowance(
             address,
             addresses[network.chainId].STAKING_ADDRESS
-          )!;
+          );
           circSupply = await sohmMainContract.circulatingSupply();
         }
         if (addresses[network.chainId].STAKING_ADDRESS) {

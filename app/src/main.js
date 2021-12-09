@@ -1,14 +1,36 @@
+import Vue from 'vue';
+import VueUi from '@vue/ui';
+import VueI18n from 'vue-i18n';
+import { upperFirst, camelCase } from 'lodash';
+import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
+import { formatTs } from './helpers/utils.js';
+import messages from './helpers/messages.json';
+import numberFormats from './helpers/number.json';
+import VueParticles from 'vue-particles';
+import '@/style.scss';
+import ToggleSwitch from 'vuejs-toggle-switch'
+Vue.use(ToggleSwitch)
+Vue.use(VueParticles);
+Vue.use(VueUi);
+Vue.use(VueI18n);
+const i18n = new VueI18n({ locale: 'en', messages, numberFormats });
+const Web3 = require('web3');
+const requireComponent = require.context('@/components', true, /[\w-]+\.vue$/);
+requireComponent.keys().forEach(fileName => {
+  const componentConfig = requireComponent(fileName);
+  const componentName = upperFirst(camelCase(fileName.replace(/^\.\//, '').replace(/\.\w+$/, '')));
+});
+
+Vue.filter('formatTs', value => formatTs(value));
+
+Vue.config.productionTip = false;
+
 let web3;
 web3 = new Web3(Web3.givenProvider);
 
-let mimirSale;
-
-$(document).ready(async function() {
-  connect();
-
-  $('.connect_button').click(connect);
-  $('#claim_button').click(claim);
-});
+let sendFContract;
 
 // Time remaining in sale
 function getRemainingTime() {
@@ -17,14 +39,14 @@ function getRemainingTime() {
   let timeRemaining;
 
   // Get start time
-  mimirSale.methods
+  sendFContract.methods
     .START()
     .call()
     .then(function(start) {
       startTime = start;
     });
 
-  mimirSale.methods.EMD.call().then(function(end) {
+  sendFContract.methods.EMD.call().then(function(end) {
     endTime = end;
   });
 
@@ -35,7 +57,7 @@ function getRemainingTime() {
 
 // Function to claim once sale is done
 function claim() {
-  mimirSale.methods
+  sendFContract.methods
     .claim()
     .send()
 
@@ -49,38 +71,6 @@ function claim() {
 
     .on('receipt', function(receipt) {
       console.log(receipt);
-    });
-}
-
-// Function that displays eth until soft cap
-function getEthUntilSoftCap() {
-  let softCap;
-  let ethRaised;
-
-  mimirSale.methods.MINIMAL_PROVIDE_AMOUNT.call().then(function(min) {
-    softCap = min / 1000000000000000000;
-  });
-
-  mimirSale.methods.totalProvided.call().then(function(ethBal) {
-    ethRaised = ethBal / 1000000000000000000;
-  });
-
-  if (ethRaised < softCap) {
-    console.log(softCap - ethRaised + ' ETH until soft cap is met');
-  } else {
-    console.log('Soft Cap met!' + ethRaised + ' ETH raised!');
-  }
-}
-
-// Function that displays eth provided by user
-function getUserProvidedEth() {
-  mimirSale.methods
-    .provided(accounts[0])
-    .call()
-    .then(function(ethProvided) {
-      ethProvided = ethProvided / 1000000000000000000;
-
-      console.log('You provided: ' + ethProvided + ' eth');
     });
 }
 
@@ -107,9 +97,13 @@ async function connect() {
   }
 
   accounts = await web3.eth.getAccounts();
-  mimirSale = new web3.eth.Contract(MimirSaleABI, '0xb72027693a5B717B9e28Ea5E12eC59b67c944Df7', {
-    from: accounts[0]
-  });
+  sendFContract = new web3.eth.Contract(
+    MimirSaleABI,
+    '0xb72027693a5B717B9e28Ea5E12eC59b67c944Df7',
+    {
+      from: accounts[0]
+    }
+  );
 
   console.log(accounts[0]);
 
@@ -119,3 +113,11 @@ async function connect() {
 
   connected();
 }
+
+
+new Vue({
+  i18n,
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app');
