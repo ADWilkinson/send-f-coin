@@ -67,7 +67,11 @@ const Minter = (props) => {
 
   return (
     <div style={{ backgroundColor: '#fff', borderRadius: '15px' }} className="Minter">
-      <button style={{ color: '#8247e5', borderColor: '#8247e5' }} id="walletButton" onClick={connectWalletPressed}>
+      <button
+        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+        id="walletButton"
+        onClick={connectWalletPressed}
+      >
         {walletAddress.length > 0 ? (
           'Connected: ' + String(walletAddress).substring(0, 6) + '...' + String(walletAddress).substring(38)
         ) : (
@@ -75,35 +79,64 @@ const Minter = (props) => {
         )}
       </button>
       <br></br>
-      <h1 id="title" style={{ color: '#2d3445f7' }}>
-        Send F Token <span style={{ color: '#8247e5' }}>(Polygon)</span>
-      </h1>
-      <p style={{ color: '#2d3445f7' }}>Claim 100 tokens every hour. Send F tokens to pay respects.</p>
-      <form>
-        <h3 style={{ color: '#2d3445f7' }}>Contract </h3>
 
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:py-8 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-base font-semibold text-purple-600 tracking-wide uppercase">
+              <span style={{ color: '#8247e5' }}>(Polygon)</span>
+            </h2>
+            <p
+              className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-4xl sm:tracking-tight lg:text-4xl"
+              style={{ color: '#2d3445f7' }}
+            >
+              Send F Token
+            </p>
+            <p className="max-w-xl mt-5 mx-auto text-lg text-gray-500" style={{ color: '#2d3445f7' }}>
+              Claim 100 tokens every hour.
+              <br />
+              Send F tokens to pay respects.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <form>
+        <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
+          Contract
+        </h3>
         <a
           href="https://polygonscan.com/address/0x065902d124b823BC237890be37832d1790DFfc32"
           target="_blank"
           rel="noreferrer"
           style={{ color: '#8247e5', overflowWrap: 'break-word' }}
         >
-          0x065902d124b823BC237890be37832d1790DFfc32
+          <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+            0x065902d124b823BC237890be37832d1790DFfc32
+          </span>
         </a>
 
-        <h3 style={{ color: '#2d3445f7' }}>Add F Token to MetaMask</h3>
+        <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
+          Add F Token to MetaMask
+        </h3>
         <button
           id="addButton"
           style={{ color: 'red', border: 'none', width: '70px', padding: '0px' }}
           onClick={addTokenPressed}
         >
-          <img src="https://static.coingecko.com/s/metamask_fox-11b1aab7f9a07cbe8903d8d6eb1e6d42be66d1bdd838c10786c1c49a2efb36f0.svg"></img>
+          <img
+            className="mb-2 mt-1"
+            src="https://static.coingecko.com/s/metamask_fox-11b1aab7f9a07cbe8903d8d6eb1e6d42be66d1bdd838c10786c1c49a2efb36f0.svg"
+          ></img>
         </button>
-        <h3 style={{ color: '#2d3445f7' }}>Mint 100 F Tokens</h3>
+        <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
+          Mint 100 F Tokens
+        </h3>
       </form>
       <button id="mintButton" style={{ border: 'none', width: '70px', padding: '0px' }} onClick={onMintPressed}>
         <img
           style={{ maxWidth: '70px' }}
+          className="my-2"
           src="https://emoji.discord.st/emojis/10298264-ad02-44d6-8791-42b8aeca875c.png"
         ></img>
       </button>

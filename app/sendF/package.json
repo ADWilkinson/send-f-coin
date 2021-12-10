@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@alch/alchemy-web3": "^1.0.1",
+    "@headlessui/react": "^1.4.2",
+    "@heroicons/react": "^1.0.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -39,6 +41,9 @@
     ]
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "autoprefixer": "^10.4.0",
+    "dotenv": "^8.2.0",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^3.0.0"
   }
 }
