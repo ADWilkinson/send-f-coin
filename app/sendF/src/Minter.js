@@ -12,7 +12,6 @@ import {
 
 const Minter = (props) => {
   const [walletAddress, setWallet] = useState('');
-  const [walletAddressAvax, setWalletAvax] = useState('');
   const [status, setStatus] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -32,6 +31,15 @@ const Minter = (props) => {
       addWalletListener();
     }
     fetchWallet();
+
+    // document.body.addEventListener('keypress', function (event) {
+    //   console.log(event.key)
+    //   if (event.key == 'k') {
+    //     onMintPressed(true)
+    //       .then()
+    //       .catch((error) => console.log(error));
+    //   }
+    // });
   }, []);
 
   function addWalletListener() {
@@ -68,10 +76,9 @@ const Minter = (props) => {
 
   const changeNetworkAvax = async (e) => {
     e.preventDefault();
-    console.log('hello');
     const walletResponse = await changeToAvax();
     setStatus(walletResponse.status);
-    setWalletAvax(walletResponse.address);
+    setWallet(walletResponse.address);
     if (walletResponse.success) {
       setNetwork('avax');
     }
@@ -80,8 +87,9 @@ const Minter = (props) => {
   const changeNetworkPolygon = async (e) => {
     e.preventDefault();
     const walletResponse = await changeToPolygon();
+    console.log(walletResponse)
     setStatus(walletResponse.status);
-    setWalletAvax(walletResponse.address);
+    setWallet(walletResponse.address);
     if (walletResponse.success) {
       setNetwork('polygon');
     }
@@ -98,7 +106,6 @@ const Minter = (props) => {
   };
 
   const onMintPressed = async (e) => {
-    e.preventDefault();
     if (network === 'avax') {
       const { success, status } = await mintNFTAvax(url, name, description);
       setStatus(status);

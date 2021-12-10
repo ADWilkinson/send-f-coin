@@ -107,7 +107,16 @@ export const changeToPolygon = async () => {
       }
     }
 
-    return { success: true };
+    const addressArray = await window.ethereum.request({
+      method: 'eth_requestAccounts',
+      params: [{ chainId: '0x89' }],
+    });
+
+    return {
+      status: '',
+      address: addressArray[0],
+      success: true,
+    };
   } else {
     return {
       address: '',
@@ -158,7 +167,16 @@ export const changeToAvax = async () => {
       }
     }
 
-    return { success: true };
+    const addressArray = await window.ethereum.request({
+      method: 'eth_requestAccounts',
+      params: [{ chainId: '0x89' }],
+    });
+
+    return {
+      status: '',
+      address: addressArray[0],
+      success: true,
+    };
   } else {
     return {
       address: '',
