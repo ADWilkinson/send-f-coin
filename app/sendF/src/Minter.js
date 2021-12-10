@@ -79,12 +79,11 @@ const Minter = (props) => {
         )}
       </button>
       <br></br>
-
       <div className="bg-white">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:py-8 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-base font-semibold text-purple-600 tracking-wide uppercase">
-              <span style={{ color: '#8247e5' }}>(Polygon)</span>
+              <span style={{ color: '#8247e5' }}>Polygon</span>
             </h2>
             <p
               className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-4xl sm:tracking-tight lg:text-4xl"
@@ -100,7 +99,6 @@ const Minter = (props) => {
           </div>
         </div>
       </div>
-
       <form>
         <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
           Contract
@@ -142,6 +140,29 @@ const Minter = (props) => {
       </button>
       <p id="status" style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
         {status}
+      </p>
+      <hr style={{ color: '#2d3445f7', marginTop: '10px' }} />
+      <p style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
+        <a
+          href=" https://knowyourmeme.com/memes/press-f-to-pay-respects/photos"
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: '#8247e5', overflowWrap: 'break-word' }}
+        >
+          <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            knowyourmeme
+          </span>
+        </a>
+        <a
+          href=" https://twitter.com/andrew_eth"
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: '#8247e5', overflowWrap: 'break-word' }}
+        >
+          <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            @andrew_eth
+          </span>
+        </a>
       </p>
     </div>
   );
