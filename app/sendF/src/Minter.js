@@ -31,15 +31,6 @@ const Minter = (props) => {
       addWalletListener();
     }
     fetchWallet();
-
-    // document.body.addEventListener('keypress', function (event) {
-    //   console.log(event.key)
-    //   if (event.key == 'k') {
-    //     onMintPressed(true)
-    //       .then()
-    //       .catch((error) => console.log(error));
-    //   }
-    // });
   }, []);
 
   function addWalletListener() {
@@ -87,7 +78,6 @@ const Minter = (props) => {
   const changeNetworkPolygon = async (e) => {
     e.preventDefault();
     const walletResponse = await changeToPolygon();
-    console.log(walletResponse)
     setStatus(walletResponse.status);
     setWallet(walletResponse.address);
     if (walletResponse.success) {
@@ -105,7 +95,7 @@ const Minter = (props) => {
     }
   };
 
-  const onMintPressed = async (e) => {
+  const onMintPressed = async () => {
     if (network === 'avax') {
       const { success, status } = await mintNFTAvax(url, name, description);
       setStatus(status);
