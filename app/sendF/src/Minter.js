@@ -139,12 +139,20 @@ const Minter = (props) => {
         onClick={changeNetworkPolygon}
       >
         {network === 'polygon' ? 'On Polygon' : 'Switch to Polygon'}
+        <img
+          style={{ width: '20px', marginLeft: '5px', paddingTop: '2px' }}
+          src="https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912"
+        ></img>
       </button>
       <button
         className="inline-flex px-1 ml-2  border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
         onClick={changeNetworkAvax}
       >
-        {network === 'avax' ? 'On Avalanche' : 'Switch to Avalanche'}
+        {network === 'avax' ? 'On Avalanche' : 'Switch to Avalanche'}{' '}
+        <img
+          style={{ width: '20px', marginLeft: '5px', paddingTop: '2px' }}
+          src="https://assets.coingecko.com/coins/images/12559/small/coin-round-red.png?1604021818"
+        ></img>
       </button>
 
       <br></br>
@@ -171,7 +179,17 @@ const Minter = (props) => {
             <p className="max-w-xl mt-5 mx-auto text-lg text-gray-500" style={{ color: '#2d3445f7' }}>
               Claim 100 tokens every hour.
               <br />
-              Send F tokens to pay respects.
+              Send F tokens to{' '}
+              <span>
+                {' '}
+                {network === 'polygon' ? (
+                  <span style={{ color: '#8247e5' }}>pay respects.</span>
+                ) : network === 'avax' ? (
+                  <span style={{ color: '#e84142' }}>pay respects.</span>
+                ) : (
+                  <span style={{ color: '#2d3445f7' }}>pay respects.</span>
+                )}
+              </span>
             </p>
           </div>
         </div>
@@ -180,6 +198,7 @@ const Minter = (props) => {
         <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
           Contract
         </h3>
+
         <a
           href="https://polygonscan.com/address/0x065902d124b823BC237890be37832d1790DFfc32"
           target="_blank"
@@ -189,13 +208,21 @@ const Minter = (props) => {
           {network === 'polygon' ? (
             <span>
               <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                0x065902d124b823BC237890be37832d1790DFfc32
+                0x065902d124b823BC237890be37832d1790DFfc32{' '}
+                <img
+                  style={{ width: '20px', marginLeft: '5px', paddingTop: '1px' }}
+                  src="https://polygonscan.com/images/svg/brands/polygon.svg?v=1.3"
+                ></img>
               </span>
             </span>
           ) : network === 'avax' ? (
             <span>
               <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-red-100 text-red-800">
                 0x7345aFD16539fE88Daa8feB61d1B3BF4531b572a
+                <img
+                  style={{ width: '20px', marginLeft: '5px', paddingTop: '1px' }}
+                  src="https://snowtrace.io/images/svg/brands/main.svg?v=21.11.4.6"
+                ></img>
               </span>
             </span>
           ) : (
@@ -204,7 +231,6 @@ const Minter = (props) => {
             </span>
           )}
         </a>
-
         <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
           Add F Token to MetaMask
         </h3>
