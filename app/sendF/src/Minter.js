@@ -1,21 +1,37 @@
 import { useEffect, useState } from 'react';
-import { connectWallet, getCurrentWalletConnected, mintNFT, addToken } from './util/interact.js';
+import {
+  connectWallet,
+  getCurrentWalletConnected,
+  addTokenAvax,
+  changeToPolygon,
+  changeToAvax,
+  mintNFT,
+  mintNFTAvax,
+  addToken,
+} from './util/interact.js';
 
 const Minter = (props) => {
   const [walletAddress, setWallet] = useState('');
+  const [walletAddressAvax, setWalletAvax] = useState('');
   const [status, setStatus] = useState('');
-
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [url, setURL] = useState('');
+  const [network, setNetwork] = useState('');
 
-  useEffect(async () => {
-    const { address, status } = await getCurrentWalletConnected();
+  useEffect(() => {
+    async function fetchWallet() {
+      const { address, status, success } = await getCurrentWalletConnected();
 
-    setWallet(address);
-    setStatus(status);
+      setWallet(address);
+      setStatus(status);
+      if (success) {
+        setNetwork('polygon');
+      }
 
-    addWalletListener();
+      addWalletListener();
+    }
+    fetchWallet();
   }, []);
 
   function addWalletListener() {
@@ -26,7 +42,7 @@ const Minter = (props) => {
           setStatus('');
         } else {
           setWallet('');
-          setStatus('🦊 Connect to Metamask using the top right button.');
+          setStatus('🦊 Connect to Metamask using the top button.');
         }
       });
     } else {
@@ -47,29 +63,68 @@ const Minter = (props) => {
     const walletResponse = await connectWallet();
     setStatus(walletResponse.status);
     setWallet(walletResponse.address);
+    setNetwork('polygon');
+  };
+
+  const changeNetworkAvax = async (e) => {
+    e.preventDefault();
+    console.log('hello');
+    const walletResponse = await changeToAvax();
+    setStatus(walletResponse.status);
+    setWalletAvax(walletResponse.address);
+    if (walletResponse.success) {
+      setNetwork('avax');
+    }
+  };
+
+  const changeNetworkPolygon = async (e) => {
+    e.preventDefault();
+    const walletResponse = await changeToPolygon();
+    setStatus(walletResponse.status);
+    setWalletAvax(walletResponse.address);
+    if (walletResponse.success) {
+      setNetwork('polygon');
+    }
   };
 
   const addTokenPressed = async (e) => {
     e.preventDefault();
-    await addToken();
+    if (network === 'avax') {
+      await addTokenAvax();
+    }
+    if (network === 'polygon') {
+      await addToken();
+    }
   };
 
   const onMintPressed = async (e) => {
     e.preventDefault();
-    const { success, status } = await mintNFT(url, name, description);
-    setStatus(status);
-    if (success) {
-      setName('');
-      setDescription('');
-      setURL('');
+    if (network === 'avax') {
+      const { success, status } = await mintNFTAvax(url, name, description);
+      setStatus(status);
+      if (success) {
+        setName('');
+        setDescription('');
+        setURL('');
+      }
+    }
+
+    if (network === 'polygon') {
+      const { success, status } = await mintNFT(url, name, description);
+      setStatus(status);
+      if (success) {
+        setName('');
+        setDescription('');
+        setURL('');
+      }
     }
   };
 
   return (
     <div style={{ backgroundColor: '#fff', borderRadius: '15px' }} className="Minter">
       <button
-        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-        id="walletButton"
+        className="inline-flex items-center px-4 py-2 border text-base font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        id="walletButtonAvax"
         onClick={connectWalletPressed}
       >
         {walletAddress.length > 0 ? (
@@ -78,12 +133,34 @@ const Minter = (props) => {
           <span>Connect Wallet</span>
         )}
       </button>
+
+      <button
+        className="inline-flex px-1  border border-transparent text-base font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+        onClick={changeNetworkPolygon}
+      >
+        {network === 'polygon' ? 'On Polygon' : 'Switch to Polygon'}
+      </button>
+      <button
+        className="inline-flex px-1 ml-2  border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        onClick={changeNetworkAvax}
+      >
+        {network === 'avax' ? 'On Avalanche' : 'Switch to Avalanche'}
+      </button>
+
       <br></br>
       <div className="bg-white">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:py-8 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-base font-semibold text-purple-600 tracking-wide uppercase">
-              <span style={{ color: '#8247e5' }}>Polygon</span>
+              {network === 'polygon' ? (
+                <span style={{ color: '#8247e5' }}>Polygon</span>
+              ) : network === 'avax' ? (
+                <span style={{ color: '#e84142' }}>Avalanche</span>
+              ) : (
+                <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Connect to a network
+                </span>
+              )}
             </h2>
             <p
               className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-4xl sm:tracking-tight lg:text-4xl"
@@ -109,9 +186,23 @@ const Minter = (props) => {
           rel="noreferrer"
           style={{ color: '#8247e5', overflowWrap: 'break-word' }}
         >
-          <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-            0x065902d124b823BC237890be37832d1790DFfc32
-          </span>
+          {network === 'polygon' ? (
+            <span>
+              <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                0x065902d124b823BC237890be37832d1790DFfc32
+              </span>
+            </span>
+          ) : network === 'avax' ? (
+            <span>
+              <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                0x7345aFD16539fE88Daa8feB61d1B3BF4531b572a
+              </span>
+            </span>
+          ) : (
+            <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+              Connect to a network
+            </span>
+          )}
         </a>
 
         <h3 className="font-bold" style={{ color: '#2d3445f7' }}>

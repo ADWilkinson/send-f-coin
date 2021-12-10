@@ -56,6 +56,14 @@ button:hover {
   margin-bottom: 25px !important;
   width: 100% !important;
 }
+
+#walletButtonAvax {
+  text-align: right !important;
+  float:right !important;
+  margin-bottom: 5px !important;
+  width: 100% !important;
+}
+
 /*
 #walletButton:focus {
   outline:none;
