@@ -3,10 +3,13 @@ import {
   connectWallet,
   getCurrentWalletConnected,
   addTokenAvax,
+  addTokenEth,
   changeToPolygon,
   changeToAvax,
+  changeToEth,
   mintNFTPolygon,
   mintNFTAvax,
+  mintNFTEth,
   addTokenPolygon,
 } from './util/interact.js';
 
@@ -22,7 +25,7 @@ const Minter = (props) => {
       setWallet(address);
       setStatus(status);
       if (success) {
-        setNetwork('polygon');
+        setNetwork('eth');
       }
 
       addWalletListener();
@@ -59,7 +62,7 @@ const Minter = (props) => {
     const walletResponse = await connectWallet();
     setStatus(walletResponse.status);
     setWallet(walletResponse.address);
-    setNetwork('polygon');
+    setNetwork('eth');
   };
 
   const changeNetworkAvax = async (e) => {
@@ -82,6 +85,16 @@ const Minter = (props) => {
     }
   };
 
+  const changeNetworkEth = async (e) => {
+    e.preventDefault();
+    const walletResponse = await changeToEth();
+    setStatus(walletResponse.status);
+    setWallet(walletResponse.address);
+    if (walletResponse.success) {
+      setNetwork('eth');
+    }
+  };
+
   const addTokenPressed = async (e) => {
     e.preventDefault();
     if (network === 'avax') {
@@ -89,6 +102,9 @@ const Minter = (props) => {
     }
     if (network === 'polygon') {
       await addTokenPolygon();
+    }
+    if (network === 'eth') {
+      await addTokenEth();
     }
   };
 
@@ -101,6 +117,11 @@ const Minter = (props) => {
 
     if (network === 'polygon') {
       const { success, status } = await mintNFTPolygon();
+      setStatus(status);
+    }
+
+    if (network === 'eth') {
+      const { success, status } = await mintNFTEth();
       setStatus(status);
     }
   };
@@ -142,6 +163,18 @@ const Minter = (props) => {
         ></img>
       </button>
 
+      <button
+        className="inline-flex px-1 mt-1 border border-transparent text-base font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        onClick={changeNetworkEth}
+      >
+        {network === 'eth' ? 'On Ethereum' : 'Switch to Ethereum'}{' '}
+        <img
+          style={{ width: '20px', marginLeft: '5px', paddingTop: '2px' }}
+          src="https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880"
+          alt=""
+        ></img>
+      </button>
+
       <br></br>
       <div className="bg-white">
         <div className="max-w-7xl mx-auto py-8 px-4 sm:py-8 sm:px-6 lg:px-8">
@@ -151,6 +184,8 @@ const Minter = (props) => {
                 <span style={{ color: '#8247e5' }}>Polygon</span>
               ) : network === 'avax' ? (
                 <span style={{ color: '#e84142' }}>Avalanche</span>
+              ) : network === 'eth' ? (
+                <span style={{ color: '#2d3445f7' }}>Ethereum</span>
               ) : (
                 <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                   Connect to a network
@@ -192,7 +227,13 @@ const Minter = (props) => {
         </div>
 
         <a
-          href="https://polygonscan.com/address/0x065902d124b823BC237890be37832d1790DFfc32"
+          href={
+            network == 'polygon'
+              ? 'https://polygonscan.com/address/0x065902d124b823BC237890be37832d1790DFfc32'
+              : network == 'avax'
+              ? 'https://snowtrace.io/address/0x7345afd16539fe88daa8feb61d1b3bf4531b572a'
+              : 'https://etherscan.io/address/0x7Be497c63f0d946963B813a2cB5B88EA51B6b135'
+          }
           target="_blank"
           rel="noreferrer"
           style={{ color: '#8247e5', overflowWrap: 'break-word' }}
@@ -215,6 +256,17 @@ const Minter = (props) => {
                 <img
                   style={{ width: '20px', marginLeft: '5px', paddingTop: '1px' }}
                   src="https://snowtrace.io/images/svg/brands/main.svg?v=21.11.4.6"
+                  alt=""
+                ></img>
+              </span>
+            </span>
+          ) : network === 'eth' ? (
+            <span>
+              <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                0x7Be497c63f0d946963B813a2cB5B88EA51B6b135
+                <img
+                  style={{ width: '20px', marginLeft: '5px', paddingTop: '1px' }}
+                  src="https://etherscan.io/images/brandassets/etherscan-logo-circle.jpg"
                   alt=""
                 ></img>
               </span>
@@ -298,7 +350,12 @@ const Minter = (props) => {
               <span className="md:hidden">Follow us on Twitter</span>
               <span className="hidden md:inline">Follow us on Twitter</span>
               <span className="block sm:ml-2 sm:inline-block">
-                <a href="https://twitter.com/sendf_org" className="text-gray-600 font-bold" target="_blank" rel="noreferrer">
+                <a
+                  href="https://twitter.com/sendf_org"
+                  className="text-gray-600 font-bold"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {' '}
                   @sendF_org <span aria-hidden="true">&rarr;</span>
                 </a>
