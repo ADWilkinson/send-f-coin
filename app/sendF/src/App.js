@@ -16,6 +16,7 @@ function App() {
         backgroundSize: 'cover',
       }}
     >
+      
       <div style={{ paddingTop: '2em' }}></div>
       <Minter></Minter>
     </div>

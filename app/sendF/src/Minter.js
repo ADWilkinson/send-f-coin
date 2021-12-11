@@ -118,9 +118,9 @@ const Minter = (props) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#fff', borderRadius: '15px' }} className="Minter">
+    <div style={{ backgroundColor: '#fff', borderRadius: '10px' }} className="Minter">
       <button
-        className="inline-flex items-center px-4 py-2 border text-base font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        className="inline-flex items-center px-4 pt-2 pb-2 border text-base font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         id="walletButtonAvax"
         onClick={connectWalletPressed}
       >
@@ -132,7 +132,7 @@ const Minter = (props) => {
       </button>
 
       <button
-        className="inline-flex px-1  border border-transparent text-base font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+        className="inline-flex px-1 mr-2 border border-transparent text-base font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
         onClick={changeNetworkPolygon}
       >
         {network === 'polygon' ? 'On Polygon' : 'Switch to Polygon'}
@@ -142,7 +142,7 @@ const Minter = (props) => {
         ></img>
       </button>
       <button
-        className="inline-flex px-1 ml-2  border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        className="inline-flex px-1 mt-1 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
         onClick={changeNetworkAvax}
       >
         {network === 'avax' ? 'On Avalanche' : 'Switch to Avalanche'}{' '}
@@ -191,10 +191,15 @@ const Minter = (props) => {
           </div>
         </div>
       </div>
-      <form>
-        <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
-          Contract
-        </h3>
+      <form className="text-center">
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center" aria-hidden="true">
+            <div className="w-full border-t border-gray-300" />
+          </div>
+          <div className="relative flex justify-center">
+            <span className="px-3 bg-white font-bold text-lg font-medium text-gray-900">Contract</span>
+          </div>
+        </div>
 
         <a
           href="https://polygonscan.com/address/0x065902d124b823BC237890be37832d1790DFfc32"
@@ -228,42 +233,56 @@ const Minter = (props) => {
             </span>
           )}
         </a>
-        <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
-          Add F Token to MetaMask
-        </h3>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center" aria-hidden="true">
+            <div className="w-full border-t border-gray-300" />
+          </div>
+          <div className="relative flex justify-center">
+            <span className="px-3 bg-white text-lg font-medium font-bold text-gray-900"> Add F Token to MetaMask</span>
+          </div>
+        </div>
+
         <button
           id="addButton"
           style={{ color: 'red', border: 'none', width: '70px', padding: '0px' }}
           onClick={addTokenPressed}
         >
           <img
-            className="mb-2 mt-1"
+            className="mb-2 mt-1 "
             src="https://static.coingecko.com/s/metamask_fox-11b1aab7f9a07cbe8903d8d6eb1e6d42be66d1bdd838c10786c1c49a2efb36f0.svg"
           ></img>
         </button>
-        <h3 className="font-bold" style={{ color: '#2d3445f7' }}>
-          Mint 100 F Tokens
-        </h3>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center" aria-hidden="true">
+            <div className="w-full border-t border-gray-300" />
+          </div>
+          <div className="relative flex justify-center">
+            <span className="px-3 bg-white text-lg font-bold font-medium text-gray-900">Mint 100 F Tokens</span>
+          </div>
+        </div>
+        <button id="mintButton" style={{ border: 'none', width: '70px', padding: '0px' }} onClick={onMintPressed}>
+          <img
+            style={{ maxWidth: '70px' }}
+            className="my-2"
+            src="https://emoji.discord.st/emojis/10298264-ad02-44d6-8791-42b8aeca875c.png"
+          ></img>
+        </button>
       </form>
-      <button id="mintButton" style={{ border: 'none', width: '70px', padding: '0px' }} onClick={onMintPressed}>
-        <img
-          style={{ maxWidth: '70px' }}
-          className="my-2"
-          src="https://emoji.discord.st/emojis/10298264-ad02-44d6-8791-42b8aeca875c.png"
-        ></img>
-      </button>
-      <p id="status" style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
-        {status}
-      </p>
-      <hr style={{ color: '#2d3445f7', marginTop: '10px' }} />
+
       <p style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
+        <p id="status" className="my-1" style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
+          {status}
+        </p>
+
         <a
           href=" https://knowyourmeme.com/memes/press-f-to-pay-respects/photos"
           target="_blank"
           rel="noreferrer"
           style={{ color: '#8247e5', overflowWrap: 'break-word' }}
         >
-          <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 my-3 rounded-full text-xs font-medium bg-gray-100 mr-1 text-gray-800">
             knowyourmeme
           </span>
         </a>
@@ -278,6 +297,22 @@ const Minter = (props) => {
           </span>
         </a>
       </p>
+      <div className="relative bg-gray-200 rounded-b-lg">
+        <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+          <div className="pr-16 sm:text-center sm:px-16">
+            <p className="font-medium text-gray-600 ">
+              <span className="md:hidden">Follow us on Twitter</span>
+              <span className="hidden md:inline">Follow us on Twitter</span>
+              <span className="block sm:ml-2 sm:inline-block">
+                <a href="https://twitter.com/sendf_org" className="text-gray-600 font-bold" target="_blank">
+                  {' '}
+                  @sendF_org <span aria-hidden="true">&rarr;</span>
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
