@@ -40,7 +40,7 @@ export const connectWallet = async () => {
               ],
             });
           } catch (error) {
-            alert(error.message);
+            console.log(error);
           }
         }
       }
@@ -55,6 +55,7 @@ export const connectWallet = async () => {
       return {
         address: '',
         status: '😥 ' + err.message,
+        success: false,
       };
     }
   } else {
@@ -82,6 +83,17 @@ export const changeToPolygon = async () => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x89' }],
       });
+
+      const addressArray = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+        params: [{ chainId: '0x89' }],
+      });
+
+      return {
+        status: '',
+        address: addressArray[0],
+        success: true,
+      };
     } catch (error) {
       if (error.code === 4902) {
         try {
@@ -102,21 +114,35 @@ export const changeToPolygon = async () => {
             ],
           });
         } catch (error) {
-          alert(error.message);
+          return {
+            status: '😥 ' + error.message,
+            success: false,
+          };
         }
+        const addressArray = await window.ethereum.request({
+          method: 'eth_requestAccounts',
+          params: [{ chainId: '0x89' }],
+        });
+
+        return {
+          status: '',
+          address: addressArray[0],
+          success: true,
+        };
+      }
+      if (error.code === 4001) {
+      
+        const addressArray = await window.ethereum.request({
+          method: 'eth_requestAccounts',
+          params: [{ chainId: '0x89' }],
+        });
+        return {
+          status: 'Network change rejected 😥',
+          address: addressArray[0],
+          success: false,
+        };
       }
     }
-
-    const addressArray = await window.ethereum.request({
-      method: 'eth_requestAccounts',
-      params: [{ chainId: '0x89' }],
-    });
-
-    return {
-      status: '',
-      address: addressArray[0],
-      success: true,
-    };
   } else {
     return {
       address: '',
@@ -142,6 +168,17 @@ export const changeToAvax = async () => {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0xa86a' }],
       });
+
+      const addressArray = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+        params: [{ chainId: '0x89' }],
+      });
+
+      return {
+        status: '',
+        address: addressArray[0],
+        success: true,
+      };
     } catch (error) {
       if (error.code === 4902) {
         try {
@@ -161,22 +198,37 @@ export const changeToAvax = async () => {
               },
             ],
           });
+
+          const addressArray = await window.ethereum.request({
+            method: 'eth_requestAccounts',
+            params: [{ chainId: '0x89' }],
+          });
+
+          return {
+            status: '',
+            address: addressArray[0],
+            success: true,
+          };
         } catch (error) {
-          alert(error.message);
+          return {
+            status: '😥 ' + error.message,
+            success: false,
+          };
         }
       }
+      if (error.code === 4001) {
+        const addressArray = await window.ethereum.request({
+          method: 'eth_requestAccounts',
+          params: [{ chainId: '0x89' }],
+        });
+
+        return {
+          status: 'Network change rejected 😥',
+          address: addressArray[0],
+          success: false,
+        };
+      }
     }
-
-    const addressArray = await window.ethereum.request({
-      method: 'eth_requestAccounts',
-      params: [{ chainId: '0x89' }],
-    });
-
-    return {
-      status: '',
-      address: addressArray[0],
-      success: true,
-    };
   } else {
     return {
       address: '',
