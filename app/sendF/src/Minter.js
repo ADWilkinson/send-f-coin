@@ -5,17 +5,14 @@ import {
   addTokenAvax,
   changeToPolygon,
   changeToAvax,
-  mintNFT,
+  mintNFTPolygon,
   mintNFTAvax,
-  addToken,
+  addTokenPolygon,
 } from './util/interact.js';
 
 const Minter = (props) => {
   const [walletAddress, setWallet] = useState('');
   const [status, setStatus] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [url, setURL] = useState('');
   const [network, setNetwork] = useState('');
 
   useEffect(() => {
@@ -49,7 +46,7 @@ const Minter = (props) => {
         <p>
           {' '}
           🦊{' '}
-          <a target="_blank" href={`https://metamask.io/download.html`}>
+          <a target="_blank" href={`https://metamask.io/download.html`} rel="noreferrer">
             You must install Metamask, a virtual Ethereum wallet, in your browser.
           </a>
         </p>
@@ -91,30 +88,20 @@ const Minter = (props) => {
       await addTokenAvax();
     }
     if (network === 'polygon') {
-      await addToken();
+      await addTokenPolygon();
     }
   };
 
   const onMintPressed = async (e) => {
     e.preventDefault();
     if (network === 'avax') {
-      const { success, status } = await mintNFTAvax(url, name, description);
+      const { success, status } = await mintNFTAvax();
       setStatus(status);
-      if (success) {
-        setName('');
-        setDescription('');
-        setURL('');
-      }
     }
 
     if (network === 'polygon') {
-      const { success, status } = await mintNFT(url, name, description);
+      const { success, status } = await mintNFTPolygon();
       setStatus(status);
-      if (success) {
-        setName('');
-        setDescription('');
-        setURL('');
-      }
     }
   };
 
@@ -140,6 +127,7 @@ const Minter = (props) => {
         <img
           style={{ width: '20px', marginLeft: '5px', paddingTop: '2px' }}
           src="https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912"
+          alt=""
         ></img>
       </button>
       <button
@@ -150,6 +138,7 @@ const Minter = (props) => {
         <img
           style={{ width: '20px', marginLeft: '5px', paddingTop: '2px' }}
           src="https://assets.coingecko.com/coins/images/12559/small/coin-round-red.png?1604021818"
+          alt=""
         ></img>
       </button>
 
@@ -215,6 +204,7 @@ const Minter = (props) => {
                 <img
                   style={{ width: '20px', marginLeft: '5px', paddingTop: '1px' }}
                   src="https://polygonscan.com/images/svg/brands/polygon.svg?v=1.3"
+                  alt=""
                 ></img>
               </span>
             </span>
@@ -225,6 +215,7 @@ const Minter = (props) => {
                 <img
                   style={{ width: '20px', marginLeft: '5px', paddingTop: '1px' }}
                   src="https://snowtrace.io/images/svg/brands/main.svg?v=21.11.4.6"
+                  alt=""
                 ></img>
               </span>
             </span>
@@ -252,6 +243,7 @@ const Minter = (props) => {
           <img
             className="mb-2 mt-1 "
             src="https://static.coingecko.com/s/metamask_fox-11b1aab7f9a07cbe8903d8d6eb1e6d42be66d1bdd838c10786c1c49a2efb36f0.svg"
+            alt=""
           ></img>
         </button>
 
@@ -268,6 +260,7 @@ const Minter = (props) => {
             style={{ maxWidth: '70px' }}
             className="my-2"
             src="https://emoji.discord.st/emojis/10298264-ad02-44d6-8791-42b8aeca875c.png"
+            alt=""
           ></img>
         </button>
       </form>
@@ -305,7 +298,7 @@ const Minter = (props) => {
               <span className="md:hidden">Follow us on Twitter</span>
               <span className="hidden md:inline">Follow us on Twitter</span>
               <span className="block sm:ml-2 sm:inline-block">
-                <a href="https://twitter.com/sendf_org" className="text-gray-600 font-bold" target="_blank">
+                <a href="https://twitter.com/sendf_org" className="text-gray-600 font-bold" target="_blank" rel="noreferrer">
                   {' '}
                   @sendF_org <span aria-hidden="true">&rarr;</span>
                 </a>

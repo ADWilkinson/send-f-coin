@@ -1,8 +1,8 @@
 require('dotenv').config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
-const contractABI = require('../contract-abi.json');
+const contractABIPolygon = require('../contract-polygon-abi.json');
 const contractABIAvax = require('../contract-avax-abi.json');
-const contractAddress = '0x065902d124b823BC237890be37832d1790DFfc32';
+const contractAddressPolygon = '0x065902d124b823BC237890be37832d1790DFfc32';
 const contractAddressAvax = '0x7345aFD16539fE88Daa8feB61d1B3BF4531b572a';
 const { createAlchemyWeb3 } = require('@alch/alchemy-web3');
 const web3 = createAlchemyWeb3(alchemyKey);
@@ -45,12 +45,11 @@ export const connectWallet = async () => {
         }
       }
 
-      const obj = {
+      return {
         status: '',
         address: addressArray[0],
         success: true,
       };
-      return obj;
     } catch (err) {
       return {
         address: '',
@@ -246,7 +245,7 @@ export const changeToAvax = async () => {
   }
 };
 
-export const addToken = async () => {
+export const addTokenPolygon = async () => {
   if (window.ethereum) {
     // wasAdded is a boolean. Like any RPC method, an error may be thrown.
     await window.ethereum.request({
@@ -254,7 +253,7 @@ export const addToken = async () => {
       params: {
         type: 'ERC20', // Initially only supports ERC20, but eventually more!
         options: {
-          address: '0x065902d124b823bc237890be37832d1790dffc32', // The address that the token is at.
+          address: contractAddressPolygon, // The address that the token is at.
           symbol: 'F', // A ticker symbol or shorthand, up to 5 chars.
           decimals: 18, // The number of decimals in the token
           image: '', // A string url of the token logo
@@ -287,7 +286,7 @@ export const addTokenAvax = async () => {
       params: {
         type: 'ERC20', // Initially only supports ERC20, but eventually more!
         options: {
-          address: '0x7345aFD16539fE88Daa8feB61d1B3BF4531b572a', // The address that the token is at.
+          address: contractAddressAvax, // The address that the token is at.
           symbol: 'F', // A ticker symbol or shorthand, up to 5 chars.
           decimals: 18, // The number of decimals in the token
           image: '', // A string url of the token logo
@@ -356,11 +355,11 @@ export const getCurrentWalletConnected = async () => {
   }
 };
 
-export const mintNFT = async (url, name, description) => {
-  window.contract = await new web3.eth.Contract(contractABI, contractAddress);
+export const mintNFTPolygon = async () => {
+  window.contract = await new web3.eth.Contract(contractABIPolygon, contractAddressPolygon);
 
   const transactionParameters = {
-    to: contractAddress, // Required except during contract publications.
+    to: contractAddressPolygon, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
     data: window.contract.methods.claim().encodeABI(),
   };
@@ -382,7 +381,7 @@ export const mintNFT = async (url, name, description) => {
   }
 };
 
-export const mintNFTAvax = async (url, name, description) => {
+export const mintNFTAvax = async () => {
   window.contract = await new web3.eth.Contract(contractABIAvax, contractAddressAvax);
 
   const transactionParameters = {
