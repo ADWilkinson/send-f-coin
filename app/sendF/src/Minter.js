@@ -95,7 +95,8 @@ const Minter = (props) => {
     }
   };
 
-  const onMintPressed = async () => {
+  const onMintPressed = async (e) => {
+    e.preventDefault();
     if (network === 'avax') {
       const { success, status } = await mintNFTAvax(url, name, description);
       setStatus(status);
