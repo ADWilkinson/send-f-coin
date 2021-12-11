@@ -131,7 +131,6 @@ export const changeToPolygon = async () => {
         };
       }
       if (error.code === 4001) {
-      
         const addressArray = await window.ethereum.request({
           method: 'eth_requestAccounts',
           params: [{ chainId: '0x89' }],
@@ -323,17 +322,20 @@ export const getCurrentWalletConnected = async () => {
         return {
           address: addressArray[0],
           status: '',
+          success: true,
         };
       } else {
         return {
           address: '',
           status: '🦊 Connect to Metamask using the top right button.',
+          success: false,
         };
       }
     } catch (err) {
       return {
         address: '',
         status: '😥 ' + err.message,
+        success: false,
       };
     }
   } else {
