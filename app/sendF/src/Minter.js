@@ -318,7 +318,7 @@ const Minter = (props) => {
       </form>
 
       <p style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
-        <p id="status" className="my-1 font-bold" style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
+        <p id="status" className="my-1" style={{ color: '#2d3445f7', overflowWrap: 'break-word' }}>
           {status}
         </p>
 

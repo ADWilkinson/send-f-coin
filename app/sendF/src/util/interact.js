@@ -390,7 +390,7 @@ export const getCurrentWalletConnected = async () => {
       } else {
         return {
           address: '',
-          status: '🦊 Connect to Metamask using the top right button.',
+          status: '🦊 Connect to Metamask using the button at the top.',
           success: false,
         };
       }
@@ -435,7 +435,16 @@ export const mintNFTPolygon = async () => {
     });
     return {
       success: true,
-      status: '✅ Check out your transaction on Polygonscan: https://polygonscan.com/tx/' + txHash,
+      status: (
+        <span>
+          <p>
+            ✅ Check out your transaction on Polygonscan:{' '}
+            <a target="_blank" style={{ color: '#8247e5' }} href={`https://polygonscan.com/tx/` + txHash}>
+              {txHash}
+            </a>
+          </p>
+        </span>
+      ),
     };
   } catch (error) {
     return {
@@ -461,7 +470,16 @@ export const mintNFTEth = async () => {
     });
     return {
       success: true,
-      status: '✅ Check out your transaction on Etherscan: https://etherscan.com/tx/' + txHash,
+      status: (
+        <span>
+          <p>
+            ✅ Check out your transaction on Etherscan:{' '}
+            <a target="_blank" style={{ color: '#2d3445f7' }} href={`https://etherscan.com/tx/'` + txHash}>
+              {txHash}
+            </a>
+          </p>
+        </span>
+      ),
     };
   } catch (error) {
     return {
@@ -470,7 +488,6 @@ export const mintNFTEth = async () => {
     };
   }
 };
-
 
 export const mintNFTAvax = async () => {
   window.contract = await new web3.eth.Contract(contractABIAvax, contractAddressAvax);
@@ -488,7 +505,16 @@ export const mintNFTAvax = async () => {
     });
     return {
       success: true,
-      status: '✅ Check out your transaction on Snowtrace: https://snowtrace.io/tx/' + txHash,
+      status: (
+        <span>
+          <p>
+            ✅ Check out your transaction on Snowtrace:{' '}
+            <a target="_blank" style={{ color: '#e84142' }} href={` https://snowtrace.io/tx/'` + txHash}>
+              {txHash}
+            </a>
+          </p>
+        </span>
+      ),
     };
   } catch (error) {
     return {
